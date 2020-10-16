@@ -1,0 +1,1 @@
+This folder contains all visualizations we produce as well as any stock photos we may use.

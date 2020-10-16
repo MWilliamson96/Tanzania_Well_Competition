@@ -1,0 +1,1 @@
+This directory contains all raw data used in the project as well as any documentation related to the data itself.
