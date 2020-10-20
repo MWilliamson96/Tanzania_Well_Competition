@@ -41,3 +41,41 @@ def __open_local_csv(filename):
     else:
         print(f'the specified filepath does not exist: {csv_path}')
         return None
+    
+    
+def get_strict_features():
+    '''
+    returns list of features used for strict dataset
+    '''
+    strict_features = ['amount_tsh', 'gps_height', 'installer', 'basin', 'region',
+                            'lga', 'population', 'construction_year', 'extraction_type_group', 'payment_type',
+                            'quality_group', 'quantity', 'source_type', 'waterpoint_type']
+    return strict_features
+
+def get_loose_features():
+    '''
+    returns list of features used for loose dataset
+    '''
+    loose_features = ['amount_tsh', 'gps_height', 'installer', 'basin', 'region', 'lga', 'ward', 'population',
+                      'public_meeting', 'scheme_management', 'permit', 'construction_year', 'extraction_type_group',
+                      'payment_type', 'water_quality', 'quantity', 'source', 'waterpoint_type']
+    return loose_features
+
+def get_numeric_features(f_names):
+    '''
+    returns list of numeric features within given feature set
+    '''
+    numeric = ['amount_tsh', 'population', 'construction_year', 'gps_height']
+    num_features = [x for x in f_names if x in numeric]
+    return num_features
+
+def get_categorical_features(f_names):
+    '''
+    returns list of categorical features within given feature set
+    '''
+    categorical = ['installer', 'basin', 'region', 'lga', 'ward',
+                   'public_meeting', 'scheme_management', 'permit','extraction_type_group',
+                   'payment_type', 'water_quality', 'quantity', 'source',
+                   'waterpoint_type', 'source_type', 'quality_group']
+    cat_features = [x for x in f_names if x in categorical]
+    return cat_features
