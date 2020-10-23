@@ -1,23 +1,35 @@
 import pathlib
 this_path = pathlib.Path().absolute()
-data_path = this_path.parent / "data"
+d_path = this_path.parent / "data"
 
 import pandas as pd
 
-def get_dataframes():
+from sklearn.preprocessing import StandardScaler
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import Pipeline
+from sklearn.impute import SimpleImputer
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.preprocessing import OneHotEncoder
+
+def get_dataframes(data_path = d_path):
     '''
     function to retrieve the data for this project as dataframes
     
-    --returns:
-    a tuple containing pandas dataframes in the format (x_train, x_test, y_train)
+    parameters:
+    --data_path: optional, string or pathlib.Path() object that describes the location of the data from the
+                current working directory
+    returns:
+    --tuple containing pandas dataframes in the format (x_train, x_test, y_train)
     '''
     x_train_filename = 'Pump_it_Up_Data_Mining_the_Water_Table_-_Training_set_values.csv'
     x_test_filename = 'Pump_it_Up_Data_Mining_the_Water_Table_-_Test_set_values.csv'
     y_train_filename = 'Pump_it_Up_Data_Mining_the_Water_Table_-_Training_set_labels.csv'
     
-    x_train = __open_local_csv(x_train_filename)
-    x_test = __open_local_csv(x_test_filename)
-    y_train = __open_local_csv(y_train_filename)
+    x_train = __open_local_csv(x_train_filename, data_path)
+    x_test = __open_local_csv(x_test_filename, data_path)
+    y_train = __open_local_csv(y_train_filename, data_path)
     
     return (x_train, x_test, y_train)
 
@@ -30,7 +42,7 @@ def data_preprocessing(x_tr, y_tr):
     --y_train: y train data as a dataframe
     
     returns:
-    tuple of preprocessed dataframes in format (x_train, y_train)
+    --tuple of preprocessed dataframes in format (x_train, y_train)
     '''
     x_train = x_tr.copy()
     y_train = y_tr.copy()
@@ -39,12 +51,6 @@ def data_preprocessing(x_tr, y_tr):
                   'extraction_type_class','payment','public_meeting','permit','management',
                   'management_group','source','source_class','waterpoint_type_group',
                   'latitude','longitude','num_private','region_code','district_code'], inplace=True, axis=1)
-
-    x_test.drop(['date_recorded','installer','funder','wpt_name','subvillage',
-                 'ward','recorded_by','scheme_name','scheme_management','extraction_type',
-                 'extraction_type_class','payment','public_meeting','permit','management',
-                 'management_group','source','source_class','waterpoint_type_group',
-                 'latitude','longitude','num_private','region_code','district_code'], inplace=True, axis=1)
 
     x_train_nums= x_train.select_dtypes(exclude="object")
     x_train_cat= x_train.select_dtypes(include="object")
@@ -59,18 +65,21 @@ def data_preprocessing(x_tr, y_tr):
     
     return (x_final, y_train)
 
-def __open_local_csv(filename):
+def __open_local_csv(filename, data_path):
     '''
     checks that the csv filepath exists for given filename and returns a dataframe containing its
     values if it does exist
     
-    --parameters:
+    parameters:
     
-    filename: should be a string containing the name of the csv to be opened
+    --filename: should be a string containing the name of the csv to be opened
+    --data_path: string or pathlib.Path() object that describes the location of the data from the
+                current working directory
     
-    --returns:
+    returns:
     
-    pandas DataFrame object if csv_path exists, else prints error msg and returns None
+    --pandas DataFrame object if csv_path exists, else prints error msg and returns None
+    
     '''
     
     csv_path = data_path / filename

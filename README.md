@@ -68,4 +68,11 @@ Our target is to classify the water pumps into one of three possible categories:
 
 ## Modeling
 
+After attempting several models, we found that the 'functional-needs repair' class was exceptionally difficult to predict due to
+it being severly underrepresented in the data set. We tried to remedy this problem by using upsampling techniques like SMOTE,
+but found that the results were still unsatisfactory. We decided that both the class 'functional-needs repair' and the class
+'non-functional' were top priority as these classes will have the most significant impact on the health and well being of
+the people using these wells. In order to more reliably predict these categories we combined them into one category 'needs repair'.
+This eliminated the problem of having a significant minority class and increased our recall score for the new category significantly over the recall score for 'functional-needs repair'
+
 ## Evaluation
