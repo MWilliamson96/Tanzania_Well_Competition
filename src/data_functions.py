@@ -21,6 +21,44 @@ def get_dataframes():
     
     return (x_train, x_test, y_train)
 
+def data_preprocessing(x_tr, y_tr):
+    '''
+    performs data preprocessing for the water_well project
+    
+    parameters:
+    --x_tr: x train data as a dataframe
+    --y_train: y train data as a dataframe
+    
+    returns:
+    tuple of preprocessed dataframes in format (x_train, y_train)
+    '''
+    x_train = x_tr.copy()
+    y_train = y_tr.copy()
+    x_train.drop(['date_recorded','installer','funder','wpt_name','subvillage',
+                  'ward','recorded_by','scheme_name','scheme_management','extraction_type',
+                  'extraction_type_class','payment','public_meeting','permit','management',
+                  'management_group','source','source_class','waterpoint_type_group',
+                  'latitude','longitude','num_private','region_code','district_code'], inplace=True, axis=1)
+
+    x_test.drop(['date_recorded','installer','funder','wpt_name','subvillage',
+                 'ward','recorded_by','scheme_name','scheme_management','extraction_type',
+                 'extraction_type_class','payment','public_meeting','permit','management',
+                 'management_group','source','source_class','waterpoint_type_group',
+                 'latitude','longitude','num_private','region_code','district_code'], inplace=True, axis=1)
+
+    x_train_nums= x_train.select_dtypes(exclude="object")
+    x_train_cat= x_train.select_dtypes(include="object")
+    ohe=OneHotEncoder(drop='first', sparse=False)
+    x_train_ohe=pd.DataFrame(ohe.fit_transform(x_train_cat),
+                             columns=ohe.get_feature_names(x_train_cat.columns),index=x_train_cat.index)
+    si=SimpleImputer()
+    x_nums_si=pd.DataFrame(si.fit_transform(x_train_nums), index= x_train_nums.index, columns= x_train_nums.columns)
+    scale= StandardScaler()
+    x_train_nums_scaled= pd.DataFrame(scale.fit_transform(x_nums_si), index= x_nums_si.index, columns= x_nums_si.columns)
+    x_final= x_train_nums_scaled.join(x_train_ohe)
+    
+    return (x_final, y_train)
+
 def __open_local_csv(filename):
     '''
     checks that the csv filepath exists for given filename and returns a dataframe containing its
