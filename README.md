@@ -68,6 +68,8 @@ Our target is to classify the water pumps into one of three possible categories:
 
 ## Modeling
 
+When building our first model we wanted to focus on physical features that all the wells would be subject to and would contribute to their eventual mechanical failure. Narrowing the focus of our features will help the Tanzanian Ministry of Water better allocate resources to fixing the appropriate wells that are peppered throughout their developing country.
+
 After attempting several models, we found that the 'functional-needs repair' class was exceptionally difficult to predict due to
 it being severly underrepresented in the data set. We tried to remedy this problem by using upsampling techniques like SMOTE,
 but found that the results were still unsatisfactory. We decided that both the class 'functional-needs repair' and the class
@@ -76,3 +78,6 @@ the people using these wells. In order to more reliably predict these categories
 This eliminated the problem of having a significant minority class and increased our recall score for the new category significantly over the recall score for 'functional-needs repair'
 
 ## Evaluation
+After running our model, we retrieved the features that had the most importance when it came to classifying functional vs non-functioning or wells that need repair. And as we suspected the features that played the biggest role came down to physical attributes dealing with the mechanism involved with retrieval, how long its been in use, the quality of the water in the well, and most importantly the well altitude. 
+
+This last feature we feel most likely relates to access to the well, both by the populations using it, and to the maintenance crews or installers who service these wells. Wells at higher altitudes are most likely harder to get to, especially if they are located in a mountainous region. 
