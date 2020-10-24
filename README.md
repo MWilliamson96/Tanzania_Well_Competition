@@ -20,8 +20,6 @@ Our home repository contains the project environment and information about our p
 
 [Raw Data](data)
 
-[Cleaned Dataset](data/clean)
-
 
 ### Images
 
