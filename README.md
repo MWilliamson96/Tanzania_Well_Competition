@@ -1,7 +1,7 @@
 
 # Classification Model for Water Pumps in Tanzania
 
-Our goal for this project is to build a model to classify water pumps in Tanzania into one of three categories: functional, not functional needs repair, and non- functional.
+Our goal for this project is to build a model to classify water pumps in Tanzania as functional or needs repair.
 
 ## TABLE OF CONTENTS
 
@@ -33,7 +33,6 @@ Our home repository contains the project environment and information about our p
 ### README
 
 [Read Me](README.md)
-
 
 
 ## Project Goal and Background
